@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import Feedback from './Feedback/Feedback.jsx';
 import Options from './Options/Options.jsx';
+import Notification from './Notification/Notification.jsx';
 
 const App = () => {
     const [feedback, setFeedback] = useState({
@@ -16,12 +17,18 @@ const App = () => {
         }));
     };
 
+    const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
+
     return (
         <div>
             <h1>Sip Happens Café</h1>
             <p>Please leave your feedback about our service by selecting one of the options below.</p>
             <Options updateFeedback={updateFeedback} />
-            <Feedback feedback={feedback}/>
+            {totalFeedback > 0 ? (
+                <Feedback feedback={feedback} />
+            ) : (
+                <Notification message="No feedback given yet" />
+            )}
         </div>
     );
 };
